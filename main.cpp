@@ -25,31 +25,8 @@ int main()
     randomGuess(computerNum);
     show(computerNum);
 
-    // while (true)
-    // {
-    //     makeNewGuess(bulls, cows, computerNum, tempGuess);
-
-    //     cout << "Сколько быков?" << endl;
-    //     cin >> bulls;
-
-    //     if (bulls == 4)
-    //     {
-    //         break;
-    //     }
-    //     else
-    //     {
-    //         cout << "Сколько коров?" << endl;
-    //         cin >> cows;
-    //     }
-    // }
-
     int arr[SIZE][4];
     allVariation(arr);
-
-    // for (int i = 0; i < SIZE; ++i)
-    // {
-    //     show(arr[i]);
-    // }
 
     while (true)
     {
