@@ -9,7 +9,8 @@ void show(int arr[4]);
 void randomGuess(int *computerNum);
 void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE);
 void allVariation(int arr[5040][4]);
-int compareMas(int computerMas[4], int arrMas[4]);
+int compareMasCows(int computerMas[4], int arrMas[4]);
+int compareMasBulls(int computerMas[4], int arrMas[4]);
 bool isNull(int arr[4]);
 
 int main()
@@ -25,8 +26,31 @@ int main()
     randomGuess(computerNum);
     show(computerNum);
 
+    // while (true)
+    // {
+    //     makeNewGuess(bulls, cows, computerNum, tempGuess);
+
+    //     cout << "Сколько быков?" << endl;
+    //     cin >> bulls;
+
+    //     if (bulls == 4)
+    //     {
+    //         break;
+    //     }
+    //     else
+    //     {
+    //         cout << "Сколько коров?" << endl;
+    //         cin >> cows;
+    //     }
+    // }
+
     int arr[SIZE][4];
     allVariation(arr);
+
+    // for (int i = 0; i < SIZE; ++i)
+    // {
+    //     show(arr[i]);
+    // }
 
     while (true)
     {
@@ -80,7 +104,7 @@ void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE)
 {
     for (int i = 0; i < SIZE; ++i)
     {
-        if (compareMas(computerNum, arr[i]) != cows)
+        if (compareMasCows(computerNum, arr[i]) != cows && compareMasBulls(computerNum, arr[i]) != bulls)
         {
             arr[i][0] = 0;
             arr[i][1] = 0;
@@ -147,7 +171,7 @@ void allVariation(int arr[][4])
     }
 }
 
-int compareMas(int computerMas[4], int arrMas[4])
+int compareMasCows(int computerMas[4], int arrMas[4])
 {
     int resCows = 0;
     for (int i = 0; i < 4; ++i)
@@ -161,6 +185,20 @@ int compareMas(int computerMas[4], int arrMas[4])
         }
     }
     return resCows;
+}
+
+int compareMasBulls(int computerMas[4], int arrMas[4])
+{
+    int resBulls = 0;
+    for (int j = 0; j < 4; ++j)
+    {
+        if (computerMas[j] == arrMas[j])
+        {
+            resBulls += 1;
+        }
+    }
+
+    return resBulls;
 }
 
 bool isNull(int arr[4])
