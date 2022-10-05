@@ -17,40 +17,17 @@ int main()
 {
     int SIZE = 5040;
     int computerNum[4];
-    // int tempGuess[4];
     int bulls;
     int cows;
+    int attemps = 1;
 
     srand(time(NULL));
 
     randomGuess(computerNum);
     show(computerNum);
 
-    // while (true)
-    // {
-    //     makeNewGuess(bulls, cows, computerNum, tempGuess);
-
-    //     cout << "Сколько быков?" << endl;
-    //     cin >> bulls;
-
-    //     if (bulls == 4)
-    //     {
-    //         break;
-    //     }
-    //     else
-    //     {
-    //         cout << "Сколько коров?" << endl;
-    //         cin >> cows;
-    //     }
-    // }
-
     int arr[SIZE][4];
     allVariation(arr);
-
-    // for (int i = 0; i < SIZE; ++i)
-    // {
-    //     show(arr[i]);
-    // }
 
     while (true)
     {
@@ -67,8 +44,13 @@ int main()
             cin >> cows;
         }
 
+        cout << "___________________" << endl;
+
         makeNewGuess(bulls, cows, computerNum, arr, SIZE);
+        attemps += 1;
     }
+
+    cout << "It taked " << attemps << " attemps to guess" << endl;
 }
 
 void show(int arr[4])
@@ -120,6 +102,7 @@ void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE)
             for (int i = 0; i < 4; ++i)
             {
                 computerNum[i] = arr[k][i];
+                arr[k][i] = 0;
             }
             show(computerNum);
             break;
