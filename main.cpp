@@ -7,18 +7,23 @@ using namespace std;
 
 void show(int arr[4]);
 void randomGuess(int *computerNum);
-void makeNewGuess(int bulls, int cows, int *computerNum, int *tempGuess);
-int **allVariation();
+void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE);
+void allVariation(int arr[5040][4]);
+int compareMas(int computerMas[4], int arrMas[4]);
+bool isNull(int arr[4]);
 
 int main()
 {
-    // int computerNum[4];
+    int SIZE = 5040;
+    int computerNum[4];
     // int tempGuess[4];
-    // int bulls;
-    // int cows = 0;
+    int bulls;
+    int cows;
 
-    // randomGuess(computerNum);
-    // show(computerNum);
+    srand(time(NULL));
+
+    randomGuess(computerNum);
+    show(computerNum);
 
     // while (true)
     // {
@@ -38,12 +43,30 @@ int main()
     //     }
     // }
 
-    int **arr = allVariation();
+    int arr[SIZE][4];
+    allVariation(arr);
 
+    // for (int i = 0; i < SIZE; ++i)
+    // {
+    //     show(arr[i]);
+    // }
 
-    for (int i = 0; i < 5040; ++i)
+    while (true)
     {
-        show(*arr);
+        cout << "Сколько быков?" << endl;
+        cin >> bulls;
+
+        if (bulls == 4)
+        {
+            break;
+        }
+        else
+        {
+            cout << "Сколько коров?" << endl;
+            cin >> cows;
+        }
+
+        makeNewGuess(bulls, cows, computerNum, arr, SIZE);
     }
 }
 
@@ -76,56 +99,101 @@ void randomGuess(int *computerNum)
     }
 }
 
-void makeNewGuess(int bulls, int cows, int *computerNum, int *tempGuess)
+void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE)
 {
-    // for (int i = 0; i < 10; ++i)
-    // {
-    //     f
-    // }
+    for (int i = 0; i < SIZE; ++i)
+    {
+        if (compareMas(computerNum, arr[i]) != cows)
+        {
+            arr[i][0] = 0;
+            arr[i][1] = 0;
+            arr[i][2] = 0;
+            arr[i][3] = 0;
+        }
+    }
+
+    for (int k = 0; k < SIZE; ++k)
+    {
+        if (!isNull(arr[k]))
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                computerNum[i] = arr[k][i];
+            }
+            show(computerNum);
+            break;
+        }
+    }
 }
 
-int **allVariation()
+void allVariation(int arr[][4])
 {
-    int **arr;
 
-        getchar();
-        for (int a = 0; a < 10; ++a)
+    int i = 0;
+    for (int a = 0; a < 10; ++a)
+    {
+        for (int b = 0; b < 10; ++b)
         {
-            for (int b = 0; b < 10; ++b)
+            if (b == a)
             {
-                if (b == a)
+                continue;
+            }
+            else
+            {
+                for (int c = 0; c < 10; ++c)
                 {
-                    continue;
-                }
-                else
-                {
-                    for (int c = 0; c < 10; ++c)
+                    if (c == a || c == b)
                     {
-                        if (c == a || c == b)
+                        continue;
+                    }
+                    else
+                    {
+                        for (int d = 0; d < 10; ++d)
                         {
-                            continue;
-                        }
-                        else
-                        {
-                            for (int d = 0; d < 10; ++d)
+                            if (d == a || d == b || d == c)
                             {
-                                if (d == a || d == b || d == c)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    // arr[i][0] = a;
-                                    // arr[i][1] = b;
-                                    // arr[i][2] = c;
-                                    // arr[i][3] = d;
-                                    cout << a * 1000 + b * 100 + c * 10 + d << endl;
-                                }
+                                continue;
+                            }
+                            else
+                            {
+                                arr[i][0] = a;
+                                arr[i][1] = b;
+                                arr[i][2] = c;
+                                arr[i][3] = d;
+                                i += 1;
                             }
                         }
                     }
                 }
             }
         }
-    return arr;
+    }
+}
+
+int compareMas(int computerMas[4], int arrMas[4])
+{
+    int resCows = 0;
+    for (int i = 0; i < 4; ++i)
+    {
+        for (int j = 0; j < 4; ++j)
+        {
+            if (computerMas[j] == arrMas[i])
+            {
+                resCows += 1;
+            }
+        }
+    }
+    return resCows;
+}
+
+bool isNull(int arr[4])
+{
+    for (int i = 0; i < 4; ++i)
+    {
+        if (arr[i] != 0)
+        {
+            return false;
+        }
+    }
+    return true;
 }
