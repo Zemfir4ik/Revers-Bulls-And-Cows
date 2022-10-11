@@ -1,8 +1,11 @@
 #include "allFunc.h"
 
-void randomGuess(int *computerNum)
+void randomGuess(vector<int> &computerNum)
 {
-    for (int i = 0; i < 4; ++i)
+    int size = computerNum.size();
+
+    computerNum[0] = rand() % 9 + 1;
+    for (int i = 1; i < 4; ++i)
     {
         computerNum[i] = rand() % 10;
 
@@ -20,40 +23,71 @@ void randomGuess(int *computerNum)
     }
 }
 
-void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE)
+bool isRetry(vector<int> arr)
 {
-    for (int i = 0; i < SIZE; ++i)
+    for (int i = 1; i < arr.size(); ++i)
     {
-        if (compareMasCows(computerNum, arr[i]) != cows && compareMasBulls(computerNum, arr[i]) != bulls)
+        for (int j = 0; j < i; ++j)
         {
-            arr[i][0] = 0;
-            arr[i][1] = 0;
-            arr[i][2] = 0;
-            arr[i][3] = 0;
-        }
-    }
-
-    while (true)
-    {
-        int k = rand() % 5040;
-        if (!isNull(arr[k]))
-        {
-            for (int i = 0; i < 4; ++i)
+            if (arr.at(i) == arr.at(j))
             {
-                computerNum[i] = arr[k][i];
-                arr[k][i] = 0;
+                return true;
             }
-            show(computerNum);
-            break;
         }
     }
+    return false;
 }
 
-bool isNull(int arr[4])
+void makeNewGuess(int bulls, int cows, vector<int> &computerNum, vector<vector<int>> &arr, int size)
+{
+    int count = 0;
+    for (int i = 0; i < arr.size(); ++i)
+    {
+        if (compareMasCows(computerNum, arr.at(i)) != cows && compareMasBulls(computerNum, arr.at(i)) != bulls)
+        {
+            vector<vector<int>>::iterator it = arr.begin();
+            count += 1;
+            arr.erase(it + i);
+        }
+    }
+    //cout << count << " is del" << endl;
+
+    // for (int k = 0; k < arr.size(); ++k)
+    // {
+    //     if (true)//!isNull(arr.at(k)))
+    //     {
+    //         cout << "1" << endl;
+    //         for (int i = 0; i < 4; ++i)
+    //         {
+    //             computerNum.at(i) = arr.at(k).at(i);
+    //             // arr.at(k).at(i) = 0;
+    //         }
+    //         arr.at(k).clear();
+    //         cout << "1" << endl;
+    //         show(computerNum);
+    //         break;
+    //     }
+    // }
+    // for (int i = 0; i < 4; ++i)
+    // {
+    //     computerNum.at(i) = arr.at(k).at(i);
+    // }
+
+    // show(arr.at(0));
+    for (int i = 0; i < 4; ++i)
+    {
+        computerNum.at(i) = arr.at(0).at(i);
+    }
+    vector<vector<int>>::iterator it = arr.begin();
+    arr.erase(it);
+    show(computerNum);
+}
+
+bool isNull(vector<int> arr)
 {
     for (int i = 0; i < 4; ++i)
     {
-        if (arr[i] != 0)
+        if (arr.at(i) != 0)
         {
             return false;
         }

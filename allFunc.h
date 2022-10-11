@@ -4,14 +4,18 @@
 #include <ctime>
 #include <unistd.h>
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
-void show(int arr[4]);
-void randomGuess(int *computerNum);
-void makeNewGuess(int bulls, int cows, int *computerNum, int arr[][4], int SIZE);
-void allVariation(int arr[5040][4]);
-int compareMasCows(int computerMas[4], int arrMas[4]);
-int compareMasBulls(int computerMas[4], int arrMas[4]);
-bool isNull(int arr[4]);
+void show(vector<int> arr);
+void randomGuess(vector<int> &computerNum);
+void makeNewGuess(int bulls, int cows, vector<int> &computerNum, vector<vector<int>> &arr, int size);
+void allVariation(vector<vector<int>> &arr, int length);
+int compareMasCows(vector<int> computerMas, vector<int> &arrMas);
+int compareMasBulls(vector<int> computerMas, vector<int> &arrMas);
+bool isNull(vector<int> arr);
 int gameLoop();
+int getSizeOfCombination();
+int getCountOfAllVariations(int length);
+bool isRetry(vector<int> arr);

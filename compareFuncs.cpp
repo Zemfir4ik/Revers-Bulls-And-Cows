@@ -1,13 +1,13 @@
 #include "allFunc.h"
 
-int compareMasCows(int computerMas[4], int arrMas[4])
+int compareMasCows(vector<int> computerMas, vector<int> &arrMas)
 {
     int resCows = 0;
     for (int i = 0; i < 4; ++i)
     {
         for (int j = 0; j < 4; ++j)
         {
-            if (computerMas[j] == arrMas[i] && j != i)
+            if (computerMas[j] == arrMas[i] && i != j)
             {
                 resCows += 1;
             }
@@ -16,7 +16,7 @@ int compareMasCows(int computerMas[4], int arrMas[4])
     return resCows;
 }
 
-int compareMasBulls(int computerMas[4], int arrMas[4])
+int compareMasBulls(vector<int> computerMas, vector<int> &arrMas)
 {
     int resBulls = 0;
     for (int j = 0; j < 4; ++j)
